@@ -1,0 +1,23 @@
+// Automatically generated PRISM file from PDFA
+dtmc
+
+module pdfa_model
+    s : [0..3] init 0;
+
+    label_7 : bool init false;
+    label_9 : bool init false;
+    label_3 : bool init false;
+    label_4 : bool init false;
+    label_8 : bool init false;
+    label_5 : bool init false;
+    label_6 : bool init false;
+    label_1 : bool init false;
+    label_2 : bool init false;
+    label_0 : bool init false;
+    final : bool init false;
+
+    [] s=0 -> 1.0 : (s'=1);
+    [] s=1 -> 0.1491108092559144 : (s'=2) & (label_0' = true) + 0.167619089704585 : (s'=2) & (label_1' = true) + 0.07968792095688722 : (s'=2) & (label_2' = true) + 0.08318092828774062 : (s'=2) & (label_3' = true) + 0.09785119808412841 : (s'=2) & (label_4' = true) + 0.11774236914664198 : (s'=2) & (label_5' = true) + 0.07556337195484521 : (s'=2) & (label_6' = true) + 0.09928147436374166 : (s'=2) & (label_7' = true) + 0.06373471319231215 : (s'=2) & (label_8' = true) + 0.06622812505320336 : (s'=2) & (label_9' = true);
+    [] s=2 -> 0.07687377405498327 : (s'=2) & (label_0' = true) + 0.3305166419155054 : (s'=2) & (label_1' = true) + 0.10093463410213366 : (s'=2) & (label_2' = true) + 0.09315469238490966 : (s'=2) & (label_3' = true) + 0.029039967428855982 : (s'=2) & (label_4' = true) + 0.01773275828603458 : (s'=2) & (label_5' = true) + 0.030163057150859103 : (s'=2) & (label_6' = true) + 0.007411171946410591 : (s'=2) & (label_7' = true) + 0.007890746475456139 : (s'=2) & (label_8' = true) + 0.006815261384675568 : (s'=2) & (label_9' = true) + 0.2994672948701761 : (s'=3);
+    [] s=3 -> 1.0 : (s'=3) & (final' = true);  // Absorbing state
+endmodule

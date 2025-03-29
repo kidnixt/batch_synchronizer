@@ -1,0 +1,30 @@
+digraph weighted_automaton {
+	margin=0 rankdir=LR size=15
+	node [shape=circle]
+	HOLE [label="HOLE
+1"]
+	HOLE -> HOLE [label=".-0
+0-0
+1-0
+2-0
+3-0
+4-0
+5-0
+6-0
+7-0
+8-0
+9-0"]
+	"ϵ" [label="ϵ
+0.0" shape=diamond]
+	"ϵ" -> "ϵ" [label=".-1.0"]
+	"ϵ" -> HOLE [label="0-0.0
+1-0.0
+2-0.0
+3-0.0
+4-0.0
+5-0.0
+6-0.0
+7-0.0
+8-0.0
+9-0.0"]
+}

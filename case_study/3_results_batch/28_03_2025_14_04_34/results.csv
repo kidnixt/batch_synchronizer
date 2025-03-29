@@ -1,0 +1,2 @@
+quantization_value,max_states,max_query_length,max_seq_length,sample_size,execution_time,equivalence_queries_count,last_token_weight_queries_count,NumberOfStatesExceeded,QueryLengthExceeded,TimeExceeded
+1,50,25,20,100,2.1209752559661865,2,24660,False,False,False

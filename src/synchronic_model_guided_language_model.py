@@ -69,10 +69,48 @@ class SynchronicModelGuidedLanguageModel(ProbabilisticModel):
         return self._model._get_symbol_index(symbol)
     
     def get_last_token_weights_batch(self, sequences, required_suffixes):
+        if self.check_is_defined:
+            defined_mask = [self.check_sequence_is_defined(seq) for seq in sequences]
+        else:
+            defined_mask = [True] * len(sequences)
+
+        # Secuencias válidas para procesamiento
+        valid_sequences = [seq for seq, is_defined in zip(sequences, defined_mask) if is_defined]
+
+        # Modelo principal en batch
+        model_results = self._model.get_last_token_weights_batch(valid_sequences, required_suffixes)
+
+        # Guía en modo secuencial
+        if self._guiding_model is not None:
+            guiding_results = [
+                self._guiding_model.get_last_token_weights(seq, required_suffixes)
+                for seq in valid_sequences
+            ]
+        else:
+            guiding_results = [[1.0] * len(required_suffixes) for _ in valid_sequences]
+
+        # Composición modelo * guía
+        composed_results = []
+        for m, g in zip(model_results, guiding_results):
+            combined = self._compose_probas(m, g)
+            if self._top_k is not None:
+                combined = self._mask_elements_below_topk(combined, self._top_k)
+            if self._normalize_outputs:
+                combined = self.normalize(combined)
+            composed_results.append(combined)
+
+        # Reconstrucción del resultado en orden original
         final_results = []
-        for sequence in sequences:
-            final_results.append(self.get_last_token_weights(sequence, required_suffixes))
+        composed_idx = 0
+        for is_defined in defined_mask:
+            if is_defined:
+                final_results.append(composed_results[composed_idx])
+                composed_idx += 1
+            else:
+                final_results.append(self.undefined_output)
+
         return final_results
+
     
 
     def _compose_probas(self, probability_vector1, probability_vector2):
